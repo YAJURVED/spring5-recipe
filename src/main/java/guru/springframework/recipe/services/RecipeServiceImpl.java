@@ -1,15 +1,16 @@
 package guru.springframework.recipe.services;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import guru.springframework.recipe.annotation.RecipeCacheable;
 import guru.springframework.recipe.domain.Recipe;
 import guru.springframework.recipe.repositories.RecipeRepository;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+//@Slf4j
 @Service
 public class RecipeServiceImpl implements RecipeService {
 
@@ -19,16 +20,25 @@ public class RecipeServiceImpl implements RecipeService {
 		this.recipeRepository = recipeRepository;
 	}
 
+	@RecipeCacheable
 	@Override
 	public Set<Recipe> getRecipes() {
 		
-		log.info("*** Inside getRecipes ****");
+		//log.info("*** Inside getRecipes ****");
 		
 		Set<Recipe> recipes = new HashSet<>();
 		
 		recipeRepository.findAll().iterator().forEachRemaining(e -> recipes.add(e));
 		
 		return recipes;
+	}
+
+	@Override
+	public Recipe findRecipeById(Long id) {
+		Optional<Recipe> recipe = recipeRepository.findById(id);
+		if(!recipe.isPresent())
+			throw new RuntimeException("Recipe not present !!!");
+		return recipe.get();
 	}
 
 }

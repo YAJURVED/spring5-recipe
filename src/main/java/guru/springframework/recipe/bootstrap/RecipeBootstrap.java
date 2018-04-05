@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import org.assertj.core.util.Arrays;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -50,7 +51,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 	@Override
 	@Transactional
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		recipeRepository.saveAll(getRecipes());
+		// check to insert the mock data once in db
+		if(!recipeRepository.findAll().iterator().hasNext())
+			recipeRepository.saveAll(getRecipes());
 	}
 	
 	private List<Recipe> getRecipes()	{
@@ -79,7 +82,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		
 		Notes notes = new Notes();
 		notes.setNotes("notes to cook spicy grilled chicken tacos");
-		
+
+		//for(int i = 0; i < 50; i++)
+		{
 		Recipe spicyGrilledChickenTacos = new Recipe();
 		spicyGrilledChickenTacos.setCookTime(1);
 		spicyGrilledChickenTacos.setDescription("Spicy Grilled Chicken Tacos");
@@ -106,9 +111,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		//chilipowder.setRecipe(spicyGrilledChickenTacos);
 		//gingergarlic.setRecipe(spicyGrilledChickenTacos);
 		//notes.setRecipe(spicyGrilledChickenTacos);
-		
+
 		recipes.add(spicyGrilledChickenTacos);
-		
+		}
 		return recipes;
 	}
 
