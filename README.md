@@ -9,3 +9,5 @@ Profile application-qa.properties to configure mysql db
 Unit Test
 Integration Test ( @DataJpaTest ) 
 Testing CircleCI to trigger build 
+Added Aspect around function annotated with custom annotation
+Added profile - QA to connect to Mysql database ( default connects to H2 db )
