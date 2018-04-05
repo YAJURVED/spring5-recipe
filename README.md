@@ -6,3 +6,6 @@ Integration Test ( @DataJpaTest )  ( maven fail safe plugin is used )
 Continuous integration testing using circle CI
 webjars.org
 Profile application-qa.properties to configure mysql db
+Unit Test
+Integration Test ( @DataJpaTest ) 
+Testing CircleCI to trigger build 
